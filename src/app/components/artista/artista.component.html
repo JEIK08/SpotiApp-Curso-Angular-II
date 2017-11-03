@@ -1,0 +1,41 @@
+<div *ngIf="artista" class="container" style="margin-top: 30px;">
+	<div class="row">
+		<div class="col-md-3">
+			<img [src]="artista.images | sinfoto" class="img-circle img-thumbnail">
+		</div>
+		<div class="col-md-9">
+			<h1>{{ artista.name }}. <small>Popularidad {{ artista.popularity }}</small></h1>
+			<hr>
+			<a [href]="artista.external_urls?.spotify">Abrir en Spotify.</a>
+			<br>
+			<button class="btn btn-primary" [routerLink]="['/search']">Regresar</button>
+		</div>
+	</div>
+	<hr>
+
+	<table *ngIf="pistas" class="table table-inverse">
+		<thead>
+			<tr>
+				<th>Nº</th>
+				<th>Foto</th>
+				<th>Nombre de la Canción</th>
+				<th>Popularidad</th>
+				<th>Escuchar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let pista of pistas; let i = index">
+				<th scope="row">{{ i+1 }}</th>
+				<td><img class="img-fluid img-thumbnail" [src]="pista.album.images | sinfoto:2"></td>
+				<td>{{ pista.name }}</td>
+				<td>{{ pista.popularity }}</td>
+				<td>
+					<iframe [src]="'https://open.spotify.com/embed?uri=' + pista.uri | domseguro" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+					<!-- <audio controls="">
+						<source [src]="pista.preview_url">Debes actualizar tu navegador
+					</audio> -->
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
